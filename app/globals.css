@@ -1,26 +1,201 @@
 @import "tailwindcss";
 
+/* ============================================
+   PriTrip theme tokens — Tailwind v4 style
+   @theme block tells Tailwind about custom colors
+   ============================================ */
+
+@theme {
+  --color-base:    var(--bg-base);
+  --color-raised:  var(--bg-raised);
+  --color-sunken:  var(--bg-sunken);
+  --color-hover:   var(--bg-hover);
+
+  --color-subtle:  var(--border-subtle);
+  --color-default: var(--border-default);
+  --color-strong:  var(--border-strong);
+
+  --color-ink:       var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted:     var(--text-muted);
+  --color-faint:     var(--text-faint);
+
+  --color-lime:   var(--accent-lime);
+  --color-cherry: var(--accent-cherry);
+  --color-sun:    var(--accent-sun);
+  --color-sky:    var(--accent-sky);
+  --color-plum:   var(--accent-plum);
+
+  --color-lime-soft:   var(--accent-lime-soft);
+  --color-cherry-soft: var(--accent-cherry-soft);
+
+  --color-inverse-bg:   var(--inverse-bg);
+  --color-inverse-text: var(--inverse-text);
+
+  --color-success:      var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-danger:       var(--danger);
+  --color-danger-soft:  var(--danger-soft);
+  --color-warning:      var(--warning);
+  --color-warning-soft: var(--warning-soft);
+}
+
+/* Dark theme (default) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-base:        #0e0e12;
+  --bg-raised:      #111116;
+  --bg-sunken:      #0a0a0d;
+  --bg-hover:       #18181f;
+
+  --border-subtle:  #1f1f27;
+  --border-default: #2a2a35;
+  --border-strong:  #3a3a48;
+
+  --text-primary:   #fef8ed;
+  --text-secondary: rgba(254, 248, 237, 0.7);
+  --text-muted:     rgba(254, 248, 237, 0.5);
+  --text-faint:     rgba(254, 248, 237, 0.35);
+
+  --accent-lime:    #c7ff3f;
+  --accent-cherry:  #ff3b3b;
+  --accent-sun:     #ffcc3f;
+  --accent-sky:     #7cc7ff;
+  --accent-plum:    #6f47ff;
+
+  --accent-lime-soft:   rgba(199, 255, 63, 0.1);
+  --accent-cherry-soft: rgba(255, 59, 59, 0.1);
+
+  --inverse-bg:   #fef8ed;
+  --inverse-text: #0e0e12;
+
+  --success:        #c7ff3f;
+  --success-soft:   rgba(199, 255, 63, 0.12);
+  --danger:         #ff3b3b;
+  --danger-soft:    rgba(255, 59, 59, 0.12);
+  --warning:        #ffcc3f;
+  --warning-soft:   rgba(255, 204, 63, 0.12);
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Light theme */
+html.light:not(.dark) {
+  --bg-base:        #fef8ed;
+  --bg-raised:      #ffffff;
+  --bg-sunken:      #f7ead1;
+  --bg-hover:       #f3e9d3;
+
+  --border-subtle:  rgba(14, 14, 18, 0.08);
+  --border-default: rgba(14, 14, 18, 0.18);
+  --border-strong:  rgba(14, 14, 18, 0.35);
+
+  --text-primary:   #0e0e12;
+  --text-secondary: rgba(14, 14, 18, 0.7);
+  --text-muted:     rgba(14, 14, 18, 0.5);
+  --text-faint:     rgba(14, 14, 18, 0.35);
+
+  --accent-lime:    #8fc600;
+  --accent-cherry:  #ff3b3b;
+  --accent-sun:     #e8a800;
+  --accent-sky:     #3b9ade;
+  --accent-plum:    #6f47ff;
+
+  --accent-lime-soft:   rgba(143, 198, 0, 0.15);
+  --accent-cherry-soft: rgba(255, 59, 59, 0.1);
+
+  --inverse-bg:   #0e0e12;
+  --inverse-text: #fef8ed;
+
+  --success:        #6fa500;
+  --success-soft:   rgba(143, 198, 0, 0.15);
+  --danger:         #ff3b3b;
+  --danger-soft:    rgba(255, 59, 59, 0.1);
+  --warning:        #d49500;
+  --warning-soft:   rgba(232, 168, 0, 0.15);
+
+  --shadow-sm: 0 1px 2px rgba(14,14,18,0.06);
+  --shadow-md: 0 4px 12px rgba(14,14,18,0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================
+   Rich editor styles (used by TipTap + rendered trip bodies)
+   ============================================ */
+
+.prose-pritrip {
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.prose-pritrip p {
+  margin: 0 0 0.75em;
+}
+
+.prose-pritrip p:last-child { margin-bottom: 0; }
+
+.prose-pritrip h2 {
+  font-size: 1.7em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 1.2em 0 0.4em;
+  line-height: 1.15;
+}
+
+.prose-pritrip h3 {
+  font-size: 1.25em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 1em 0 0.3em;
+}
+
+.prose-pritrip ul, .prose-pritrip ol {
+  padding-left: 1.5em;
+  margin: 0 0 0.75em;
+}
+.prose-pritrip ul { list-style: disc; }
+.prose-pritrip ol { list-style: decimal; }
+.prose-pritrip li { margin: 0.15em 0; }
+.prose-pritrip li > p { margin: 0; }
+
+.prose-pritrip blockquote {
+  border-left: 3px solid var(--accent-lime);
+  padding: 0.1em 0 0.1em 1em;
+  margin: 0.75em 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.prose-pritrip code {
+  background: var(--bg-hover);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.9em;
+}
+
+.prose-pritrip hr {
+  border: none;
+  border-top: 2px dashed var(--border-default);
+  margin: 1.5em 0;
+}
+
+.prose-pritrip strong { font-weight: 700; }
+.prose-pritrip em { font-style: italic; }
+.prose-pritrip s { text-decoration: line-through; opacity: 0.7; }
+
+/* TipTap placeholder */
+.prose-pritrip p.is-editor-empty:first-child::before {
+  color: var(--text-faint);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }
