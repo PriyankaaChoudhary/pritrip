@@ -47,11 +47,14 @@ export default async function Page() {
   }, {});
 
   return (
-    <HomePage
-      settings={settings}
-      continents={continents || []}
-      regions={regions || []}
-      trips={trips || []}
-    />
+    <>
+      <HomePage
+        settings={settings}
+        continents={continents || []}
+        regions={regions || []}
+        trips={trips || []}
+      />
+      <div>Developed by Priyanka</div>
+    </>
   );
 }
