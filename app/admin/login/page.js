@@ -1,10 +1,40 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoginFallback />}>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginFallback() {
+  // Shown briefly before the interactive form mounts
+  return (
+    <main className="min-h-screen bg-base text-ink flex items-center justify-center p-6 font-sans">
+      <div className="w-full max-w-md">
+        <div className="mb-10 text-center">
+          <div className="inline-flex items-center gap-2 text-4xl italic" style={{ fontFamily: 'Georgia, serif' }}>
+            Pri
+            <span
+              className="bg-cherry text-white px-3 py-0.5 rounded-full text-2xl font-extrabold not-italic"
+              style={{ transform: 'rotate(-4deg)', display: 'inline-block', fontFamily: 'system-ui' }}
+            >
+              Trip
+            </span>
+          </div>
+        </div>
+        <div className="bg-raised border-2 border-subtle rounded-3xl p-8 h-80 animate-pulse" />
+      </div>
+    </main>
+  );
+}
+
+function LoginForm() {
   const supabase = createClient();
   const router = useRouter();
   const search = useSearchParams();
@@ -15,7 +45,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Apply the admin's saved theme preference on load
+  // Apply admin's saved theme preference on mount
   useEffect(() => {
     try {
       const stored = localStorage.getItem('pritrip-theme-admin');
