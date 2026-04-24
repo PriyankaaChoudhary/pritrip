@@ -54,7 +54,7 @@ export default async function Page() {
         regions={regions || []}
         trips={trips || []}
       />
-      <div>Developed by Priyanka</div>
+      <div>Developed by Priyanka and Akshay</div>
     </>
   );
 }
