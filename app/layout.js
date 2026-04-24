@@ -3,6 +3,9 @@ import './globals.css';
 export const metadata = {
   title: 'PriTrip — trip planning, but honest',
   description: "Real trip guides from someone who's actually been.",
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+  },
 };
 
 // This script runs before React and sets the theme class on <html>,
