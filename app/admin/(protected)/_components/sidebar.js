@@ -16,14 +16,12 @@ const NAV = [
   { section: 'Content', items: [
     { href: '/admin/homepage', label: 'Homepage',     icon: Home,     accent: 'cherry' },
     { href: '/admin/trips',    label: 'Trips',        icon: MapPin,   badge: 'main' },
-    { href: '/admin/regions',  label: 'Regions',      icon: Globe2 },
-    { href: '/admin/stories',  label: 'Stories',      icon: Film },
+    { href: '/admin/blogs',    label: 'Blog posts',   icon: Film },
     { href: '/admin/venues',   label: 'Venues',       icon: Compass },
-    { href: '/admin/journey',  label: 'Journey',      icon: Clock },
+    { href: '/admin/regions',  label: 'Regions',      icon: Globe2 },
   ]},
   { section: 'Taxonomy', items: [
     { href: '/admin/tags',    label: 'Tags',         icon: Tag },
-    { href: '/admin/media',   label: 'Media library',icon: ImageIcon },
   ]},
   { section: 'System', items: [
     { href: '/admin/settings', label: 'Settings',     icon: Settings },

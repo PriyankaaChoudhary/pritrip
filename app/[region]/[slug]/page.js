@@ -315,6 +315,36 @@ export default async function TripPage({ params }) {
               <InfoRow icon={MapPin} label="Getting there" value={trip.location_text} />
             )}
 
+            {/* Source & freshness */}
+{(trip.content_source || trip.last_verified_at) && (
+  <div className="mt-4 bg-[#f7ead1] border-2 border-[#0e0e12] rounded-3xl p-5 text-sm">
+    <div className="text-[10px] font-mono uppercase tracking-[1.5px] opacity-60 mb-2">
+      About this guide
+    </div>
+    {trip.content_source && (
+      <div className="mb-2">
+        <SourceLabel source={trip.content_source} />
+      </div>
+    )}
+    {trip.last_verified_at && (
+      <div className="text-[13px] opacity-75">
+        Last verified {new Date(trip.last_verified_at).toLocaleDateString('en-CA', { month: 'long', year: 'numeric' })}
+      </div>
+    )}
+    {trip.contributor_notes && (
+      <div className="text-[13px] opacity-75 mt-1.5 italic">
+        {trip.contributor_notes}
+      </div>
+    )}
+    <a
+      href="mailto:feedback@pritrip.ca?subject=Feedback: {encodeURIComponent(trip.title)}"
+      className="inline-block mt-3 text-[11px] font-mono uppercase tracking-wider text-[#ff3b3b] hover:underline"
+    >
+      Spot outdated info? Let us know →
+    </a>
+  </div>
+)}
+
             {/* Season notes */}
             {trip.trip_seasons?.some(s => s.season_note) && (
               <div className="pt-3 border-t border-[#0e0e12]/15">
@@ -396,6 +426,20 @@ function InfoRow({ icon: Icon, label, value }) {
         <Icon size={10}/> {label}
       </div>
       <div className="text-sm font-semibold leading-snug">{value}</div>
+    </div>
+  );
+}
+
+function SourceLabel({ source }) {
+  const labels = {
+    visited:    '✓ Based on a visit',
+    researched: '🔍 Researched from primary sources',
+    community:  '💬 Compiled from community tips',
+    mixed:      '✦ Mixed sources: visits, research, and community',
+  };
+  return (
+    <div className="font-semibold text-sm">
+      {labels[source] || labels.researched}
     </div>
   );
 }

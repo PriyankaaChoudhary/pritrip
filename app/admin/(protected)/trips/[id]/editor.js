@@ -274,6 +274,54 @@ export default function TripEditor({ initial, regions, allTags, mode,  photos = 
               </Field>
             </TwoCol>
           </Section>
+          <Section
+  title="Content source"
+  description="Be honest with visitors about where this info comes from. It builds trust."
+  accent="lime"
+>
+  <Field label="How was this guide compiled?">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      {[
+        { value: 'visited',    label: '✓ Visited in person',  hint: 'Photos, direct experience, first-hand notes' },
+        { value: 'researched', label: '🔍 Researched',         hint: 'Cross-referenced sources, not personally visited' },
+        { value: 'community',  label: '💬 Community-sourced',  hint: 'Mostly from visitor submissions' },
+        { value: 'mixed',      label: '✦ Mixed sources',       hint: 'Combination of research + visits + community' },
+      ].map(opt => (
+        <button
+          key={opt.value}
+          type="button"
+          onClick={() => setField('content_source', opt.value)}
+          className={`
+            p-3 rounded-xl border-2 transition text-left
+            ${trip.content_source === opt.value
+              ? 'bg-lime-soft border-lime text-ink'
+              : 'bg-base border-default text-secondary hover:border-strong'}
+          `}
+        >
+          <div className="text-sm font-bold mb-0.5">{opt.label}</div>
+          <div className="text-[11px] text-muted leading-snug">{opt.hint}</div>
+        </button>
+      ))}
+    </div>
+  </Field>
+
+  <Field label="Last verified" hint="When was this info last checked? Visitors see this to gauge freshness.">
+    <input
+      type="datetime-local"
+      value={trip.last_verified_at ? new Date(trip.last_verified_at).toISOString().slice(0, 16) : ''}
+      onChange={e => setField('last_verified_at', e.target.value ? new Date(e.target.value).toISOString() : null)}
+      className="w-full bg-base border-2 border-default focus:border-lime rounded-xl px-4 py-2.5 text-sm outline-none transition text-ink"
+    />
+  </Field>
+
+  <Field label="Attribution note" hint="Optional: e.g. 'Updated by 3 visitors in Oct 2025' or 'Park websites cross-referenced Dec 2025'">
+    <TextInput
+      value={trip.contributor_notes}
+      onChange={v => setField('contributor_notes', v)}
+      placeholder="Free-text credit or update history"
+    />
+  </Field>
+</Section>
 
           {/* SEO */}
           <Section

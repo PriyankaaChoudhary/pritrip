@@ -35,6 +35,9 @@ export default async function TripEditPage({ params }) {
       is_featured: false,
       featured_image_url: '',
       featured_image_alt: '',
+      content_source: 'researched',       // NEW
+      last_verified_at: new Date().toISOString(), // NEW
+      contributor_notes: '',              // NEW
       seasons: [],
       tag_ids: [],
       updated_at: null,
@@ -79,6 +82,9 @@ export default async function TripEditPage({ params }) {
     is_featured:        !!trip.is_featured,
     featured_image_url: trip.featured_image_url || '',
     featured_image_alt: trip.featured_image_alt || '',
+    content_source:     trip.content_source || 'researched',    // NEW
+    last_verified_at:   trip.last_verified_at || null,          // NEW
+    contributor_notes:  trip.contributor_notes || '',  
     seasons:            (trip.trip_seasons || []).map(s => s.season),
     tag_ids:            (trip.trip_tags || []).map(t => t.tag_id),
     updated_at:         trip.updated_at,

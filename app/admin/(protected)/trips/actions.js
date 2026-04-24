@@ -84,6 +84,9 @@ export async function saveTripAction(payload) {
     is_featured:        !!payload.is_featured,
     featured_image_url: payload.featured_image_url || null,
     featured_image_alt: payload.featured_image_alt?.trim() || null,
+    content_source:     payload.content_source || 'researched',       // NEW
+    last_verified_at:   payload.last_verified_at || null,              // NEW
+    contributor_notes:  payload.contributor_notes?.trim() || null, 
   };
 
   // Handle publish timestamp

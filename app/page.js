@@ -30,16 +30,41 @@ export default async function Page() {
     { data: continents },
     { data: regions },
     { data: trips },
+    { data: venues },
   ] = await Promise.all([
     supabase.from('site_settings').select('key, value'),
     supabase.from('continents').select('*').order('display_order'),
-    supabase.from('regions').select('*, countries(name, flag_emoji)').eq('is_live', true).order('display_order'),
+    supabase.from('regions').select('*').eq('is_live', true).order('display_order'),
     supabase
       .from('trips')
-      .select('*, regions(name, flag_emoji, slug), trip_seasons(season), trip_tags(tags(slug, label, emoji))')
+      .select(`
+        id, slug, title, subtitle, location_text,
+        featured_image_url, featured_image_alt, is_featured,
+        regions(name, flag_emoji, slug),
+        trip_seasons(season),
+        trip_tags(tags(slug, label, emoji))
+      `)
+      .eq('status', 'published')
+      .order('is_featured', { ascending: false }),
+    supabase
+      .from('venues')
+      .select('id, name, emoji, location_text, description, activity_categories, region_id')
       .eq('status', 'published')
       .order('display_order'),
   ]);
+
+  // Blogs table might not exist yet — safe fallback
+  let blogs = [];
+  try {
+    const { data } = await supabase
+      .from('blog_posts')
+      .select('id, slug, title, excerpt, kicker, cover_image_url, published_at')
+      .eq('status', 'published')
+      .order('published_at', { ascending: false });
+    blogs = data || [];
+  } catch {
+    blogs = [];
+  }
 
   const settings = (settingsRows || []).reduce((acc, r) => {
     acc[r.key] = r.value;
@@ -52,6 +77,8 @@ export default async function Page() {
       continents={continents || []}
       regions={regions || []}
       trips={trips || []}
+      venues={venues || []}
+      blogs={blogs}
     />
   );
 }
